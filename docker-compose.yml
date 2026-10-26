@@ -1,0 +1,7 @@
+# docker compose up -d --build   → http://<your-vps-ip>:8080
+services:
+  pdf-studio:
+    build: .
+    ports:
+      - "8080:80"
+    restart: unless-stopped

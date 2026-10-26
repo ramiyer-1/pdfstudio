@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>PDF Studio</title>
+  <meta name="description" content="Combine images, PDFs and documents into one PDF. Rearrange pages, rotate, and download — all in your browser.">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Cpath d='M20 14h17l9 9v27H20z' fill='%23fff'/%3E%3Cpath d='M37 14v9h9' fill='%23c7d2fe'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+    <symbol id="i-page" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></symbol>
+    <symbol id="i-rot-l" viewBox="0 0 24 24"><path d="M4 4v5h5"/><path d="M4.6 9A8 8 0 1 1 4 13"/></symbol>
+    <symbol id="i-rot-r" viewBox="0 0 24 24"><path d="M20 4v5h-5"/><path d="M19.4 9A8 8 0 1 0 20 13"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></symbol>
+    <symbol id="i-redo" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h3"/></symbol>
+    <symbol id="i-sort" viewBox="0 0 24 24"><path d="M7 4v16M3 16l4 4 4-4M17 20V4M13 8l4-4 4 4"/></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></symbol>
+    <symbol id="i-cursor" viewBox="0 0 24 24"><path d="M5 3l14 7-6 2-2 6z"/></symbol>
+    <symbol id="i-text" viewBox="0 0 24 24"><path d="M5 6V4h14v2M12 4v16M9 20h6"/></symbol>
+    <symbol id="i-pen" viewBox="0 0 24 24"><path d="M3 17c3-3 5 2 8-1s1-7 4-9 5 1 6 3"/></symbol>
+    <symbol id="i-hl" viewBox="0 0 24 24"><path d="m9 15 6-11 4 2-6 11z"/><path d="M9 15l-1 4 3-1M4 21h16"/></symbol>
+    <symbol id="i-rect" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1"/></symbol>
+    <symbol id="i-ellipse" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="9" ry="7"/></symbol>
+    <symbol id="i-line" viewBox="0 0 24 24"><path d="M5 19 19 5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 19 19 5M10 5h9v9"/></symbol>
+    <symbol id="i-eraser" viewBox="0 0 24 24"><path d="m15 4 6 6-9 9H6l-3-3z"/><path d="M9 10l6 6M6 19h14"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 8"/></symbol>
+    <symbol id="i-sign" viewBox="0 0 24 24"><path d="M3 17c2-6 4-9 5-8s-2 8 0 8 3-5 5-5 1 4 3 4 3-2 5-2M3 21h18"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  </svg>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true"><svg><use href="#i-page"/></svg></span>
+      <span class="brand-name">PDF Studio</span>
+      <span class="badge-private" title="Files never leave your device"><svg><use href="#i-lock"/></svg>Private · on-device</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn btn-primary" id="btnAdd" title="Add files (O)"><svg><use href="#i-upload"/></svg><span>Add files</span></button>
+      <button class="btn btn-ghost hide-sm" id="btnAddFolder" title="Add a whole folder"><svg><use href="#i-folder"/></svg><span>Folder</span></button>
+      <button class="btn btn-ghost show-touch" id="btnCamera" title="Take a photo"><svg><use href="#i-camera"/></svg><span>Camera</span></button>
+      <button class="btn btn-ghost" id="btnBlank" title="Insert blank page"><svg><use href="#i-plus"/></svg><span class="hide-sm">Blank page</span></button>
+      <span class="sep hide-sm"></span>
+      <button class="icon-btn" id="btnUndo" title="Undo (Ctrl+Z)" disabled><svg><use href="#i-undo"/></svg></button>
+      <button class="icon-btn" id="btnRedo" title="Redo (Ctrl+Shift+Z)" disabled><svg><use href="#i-redo"/></svg></button>
+      <button class="icon-btn" id="btnTheme" title="Toggle theme"><svg><use href="#i-moon"/></svg></button>
+      <button class="icon-btn show-narrow" id="btnSettings" title="Output settings"><svg><use href="#i-settings"/></svg></button>
+    </div>
+    <input type="file" id="fileInput" multiple hidden
+      accept=".pdf,image/*,.heic,.heif,.txt,.md,.csv,.json,.log,.xml,.html,.htm,.docx,.rtf,.js,.ts,.py,.css,.yaml,.yml">
+    <input type="file" id="folderInput" webkitdirectory multiple hidden>
+    <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
+  </header>
+
+  <main class="layout">
+    <section class="workspace" id="workspace">
+      <div class="toolbar" id="toolbar" hidden>
+        <div class="toolbar-left">
+          <label class="check-all"><input type="checkbox" id="chkAll"><span id="countLabel">0 pages</span></label>
+          <div class="sel-actions" id="selActions" hidden>
+            <span class="sel-count" id="selCount"></span>
+            <button class="chip" id="selRotL" title="Rotate selected left"><svg><use href="#i-rot-l"/></svg></button>
+            <button class="chip" id="selRotR" title="Rotate selected right"><svg><use href="#i-rot-r"/></svg></button>
+            <button class="chip" id="selDup" title="Duplicate selected"><svg><use href="#i-copy"/></svg></button>
+            <button class="chip" id="selFirst" title="Move selected to start">To start</button>
+            <button class="chip" id="selLast" title="Move selected to end">To end</button>
+            <button class="chip danger" id="selDel" title="Delete selected (Del)"><svg><use href="#i-trash"/></svg></button>
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <div class="menu-wrap">
+            <button class="chip" id="btnSort"><svg><use href="#i-sort"/></svg>Sort</button>
+            <div class="menu" id="sortMenu" hidden>
+              <button data-sort="name-asc">File name A → Z</button>
+              <button data-sort="name-desc">File name Z → A</button>
+              <button data-sort="added">Order added</button>
+              <button data-sort="reverse">Reverse current order</button>
+              <button data-sort="interleave">Interleave files (1a,1b,2a,2b…)</button>
+            </div>
+          </div>
+          <label class="zoom" title="Thumbnail size"><svg><use href="#i-eye"/></svg><input type="range" id="zoom" min="110" max="300" step="10" value="170"></label>
+          <button class="chip danger" id="btnClear" title="Remove all pages">Clear</button>
+        </div>
+      </div>
+
+      <div class="dropzone" id="dropzone">
+        <div class="dz-inner">
+          <div class="dz-icon"><svg><use href="#i-upload"/></svg></div>
+          <h1>Combine anything into one PDF</h1>
+          <p>Drop images, PDFs, Word (.docx) or text files here — or paste a screenshot.</p>
+          <div class="dz-buttons">
+            <button class="btn btn-primary btn-lg" id="dzAdd"><svg><use href="#i-upload"/></svg>Choose files</button>
+            <button class="btn btn-ghost btn-lg show-touch" id="dzCamera"><svg><use href="#i-camera"/></svg>Scan with camera</button>
+          </div>
+          <ul class="dz-feats">
+            <li><svg><use href="#i-check"/></svg>JPG, PNG, WEBP, HEIC, GIF, BMP, SVG</li>
+            <li><svg><use href="#i-check"/></svg>PDF pages split for reordering</li>
+            <li><svg><use href="#i-check"/></svg>DOCX, TXT, MD, CSV, JSON, code</li>
+            <li><svg><use href="#i-check"/></svg>100% in your browser — nothing uploaded</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid" id="grid" aria-label="Pages — drag to reorder"></div>
+      <p class="hint" id="hint" hidden>Drag pages to reorder · Click to select (Shift for range) · Double-click to preview · ✎ to add text, drawings &amp; signatures</p>
+    </section>
+
+    <aside class="panel" id="panel">
+      <div class="panel-head">
+        <h2>Output</h2>
+        <button class="icon-btn show-narrow" id="btnPanelClose" title="Close"><svg><use href="#i-x"/></svg></button>
+      </div>
+      <div class="panel-body">
+        <label class="field">
+          <span>File name</span>
+          <div class="input-suffix"><input type="text" id="optName" value="combined" spellcheck="false"><span>.pdf</span></div>
+        </label>
+
+        <div class="field">
+          <span>Page size</span>
+          <select id="optSize">
+            <option value="auto">Fit to content</option>
+            <option value="a4">A4 (210 × 297 mm)</option>
+            <option value="letter">US Letter (8.5 × 11 in)</option>
+            <option value="legal">US Legal (8.5 × 14 in)</option>
+            <option value="a3">A3 (297 × 420 mm)</option>
+            <option value="a5">A5 (148 × 210 mm)</option>
+          </select>
+        </div>
+
+        <div class="field" id="rowOrient">
+          <span>Orientation</span>
+          <div class="seg" data-name="optOrient">
+            <button data-v="auto" class="on">Auto</button><button data-v="portrait">Portrait</button><button data-v="landscape">Landscape</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span>Margin</span>
+          <div class="seg" data-name="optMargin">
+            <button data-v="0" class="on">None</button><button data-v="18">Small</button><button data-v="36">Medium</button><button data-v="72">Large</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span>Image fit</span>
+          <div class="seg" data-name="optFit">
+            <button data-v="contain" class="on">Fit</button><button data-v="cover">Fill</button><button data-v="stretch">Stretch</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span>Image quality <em class="muted" id="qualityNote"></em></span>
+          <div class="seg" data-name="optQuality">
+            <button data-v="original">Original</button><button data-v="high" class="on">High</button><button data-v="balanced">Balanced</button><button data-v="small">Small</button>
+          </div>
+        </div>
+
+        <label class="toggle"><input type="checkbox" id="optResizePdf"><span>Apply page size to PDF pages too</span></label>
+        <label class="toggle"><input type="checkbox" id="optGray"><span>Black &amp; white images</span></label>
+
+        <details class="more">
+          <summary>Page numbers, watermark &amp; info</summary>
+          <div class="field">
+            <span>Page numbers</span>
+            <select id="optNumbers">
+              <option value="none">None</option>
+              <option value="bc">Bottom center — “3”</option>
+              <option value="br">Bottom right — “3”</option>
+              <option value="bc-of">Bottom center — “Page 3 of 10”</option>
+              <option value="br-of">Bottom right — “Page 3 of 10”</option>
+            </select>
+          </div>
+          <label class="field">
+            <span>Watermark text</span>
+            <input type="text" id="optWatermark" placeholder="e.g. CONFIDENTIAL">
+          </label>
+          <label class="field">
+            <span>Title</span>
+            <input type="text" id="optTitle" placeholder="Document title (metadata)">
+          </label>
+          <label class="field">
+            <span>Author</span>
+            <input type="text" id="optAuthor" placeholder="Author (metadata)">
+          </label>
+        </details>
+      </div>
+
+      <div class="panel-foot">
+        <div class="progress" id="progress" hidden><div class="bar" id="progressBar"></div><span id="progressText"></span></div>
+        <div class="result" id="result" hidden>
+          <div><strong id="resultName"></strong><span id="resultMeta" class="muted"></span></div>
+          <div class="result-actions">
+            <button class="chip" id="btnOpenResult">Open</button>
+            <button class="chip" id="btnDownloadAgain"><svg><use href="#i-download"/></svg>Save again</button>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-xl" id="btnCreate" disabled><svg><use href="#i-download"/></svg><span id="createLabel">Create PDF</span></button>
+        <button class="btn btn-ghost btn-block" id="btnCreateSel" hidden>Create from selected pages only</button>
+      </div>
+    </aside>
+  </main>
+
+  <div class="drop-overlay" id="dropOverlay" hidden><div><svg><use href="#i-upload"/></svg><p>Drop to add</p></div></div>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-box">
+      <div class="modal-head">
+        <span id="modalTitle"></span>
+        <div class="modal-tools">
+          <button class="btn btn-primary btn-sm" id="mEdit" title="Edit this page"><svg><use href="#i-edit"/></svg>Edit</button>
+          <button class="icon-btn" id="mRotL" title="Rotate left"><svg><use href="#i-rot-l"/></svg></button>
+          <button class="icon-btn" id="mRotR" title="Rotate right"><svg><use href="#i-rot-r"/></svg></button>
+          <button class="icon-btn" id="mDel" title="Delete page"><svg><use href="#i-trash"/></svg></button>
+          <button class="icon-btn" data-close title="Close (Esc)"><svg><use href="#i-x"/></svg></button>
+        </div>
+      </div>
+      <div class="modal-stage">
+        <button class="nav prev" id="mPrev" title="Previous (←)"><svg><use href="#i-left"/></svg></button>
+        <div class="stage-img" id="modalStage"></div>
+        <button class="nav next" id="mNext" title="Next (→)"><svg><use href="#i-right"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="editor" id="editor" hidden>
+    <div class="ed-top">
+      <div class="ed-tools" id="edTools" role="toolbar" aria-label="Editing tools">
+        <button data-tool="select" title="Select / move (V)"><svg><use href="#i-cursor"/></svg><span>Select</span></button>
+        <button data-tool="text" title="Add text (T)"><svg><use href="#i-text"/></svg><span>Text</span></button>
+        <button data-tool="pen" title="Draw (P)"><svg><use href="#i-pen"/></svg><span>Draw</span></button>
+        <button data-tool="highlight" title="Highlight (H)"><svg><use href="#i-hl"/></svg><span>Highlight</span></button>
+        <button data-tool="rect" title="Rectangle (R)"><svg><use href="#i-rect"/></svg><span>Box</span></button>
+        <button data-tool="ellipse" title="Ellipse (O)"><svg><use href="#i-ellipse"/></svg><span>Circle</span></button>
+        <button data-tool="line" title="Line (L)"><svg><use href="#i-line"/></svg><span>Line</span></button>
+        <button data-tool="arrow" title="Arrow (A)"><svg><use href="#i-arrow"/></svg><span>Arrow</span></button>
+        <button data-tool="whiteout" title="Whiteout / erase (W)"><svg><use href="#i-eraser"/></svg><span>Whiteout</span></button>
+        <button data-tool="image" title="Insert image or logo"><svg><use href="#i-image"/></svg><span>Image</span></button>
+        <button data-tool="sign" title="Draw a signature"><svg><use href="#i-sign"/></svg><span>Sign</span></button>
+      </div>
+      <div class="ed-actions">
+        <button class="icon-btn" id="edUndo" title="Undo (Ctrl+Z)"><svg><use href="#i-undo"/></svg></button>
+        <button class="icon-btn" id="edRedo" title="Redo (Ctrl+Shift+Z)"><svg><use href="#i-redo"/></svg></button>
+        <span class="sep"></span>
+        <button class="icon-btn" id="edPrev" title="Save &amp; previous page"><svg><use href="#i-left"/></svg></button>
+        <span class="ed-page" id="edPage"></span>
+        <button class="icon-btn" id="edNext" title="Save &amp; next page"><svg><use href="#i-right"/></svg></button>
+        <span class="sep"></span>
+        <button class="btn btn-ghost" id="edCancel">Cancel</button>
+        <button class="btn btn-primary" id="edDone"><svg><use href="#i-check"/></svg>Done</button>
+      </div>
+    </div>
+    <div class="ed-props">
+      <div class="pg" data-prop-group="color">
+        <div class="swatches" id="edSwatches">
+          <button data-c="#111827" style="--c:#111827" title="Black"></button>
+          <button data-c="#dc2626" style="--c:#dc2626" title="Red"></button>
+          <button data-c="#2563eb" style="--c:#2563eb" title="Blue"></button>
+          <button data-c="#16a34a" style="--c:#16a34a" title="Green"></button>
+          <button data-c="#f59e0b" style="--c:#f59e0b" title="Orange"></button>
+          <button data-c="#fde047" style="--c:#fde047" title="Yellow"></button>
+          <button data-c="#ffffff" style="--c:#ffffff" title="White"></button>
+        </div>
+        <input type="color" id="edColor" title="Custom colour">
+      </div>
+      <div class="pg" data-prop-group="text">
+        <select id="edFont" title="Font">
+          <option value="helv">Helvetica</option><option value="times">Times</option><option value="courier">Courier</option>
+        </select>
+        <input type="number" id="edSize" min="4" max="400" title="Font size">
+        <button class="tbtn" id="edBold" title="Bold"><b>B</b></button>
+        <button class="tbtn" id="edItalic" title="Italic"><i>I</i></button>
+      </div>
+      <div class="pg" data-prop-group="width">
+        <label title="Line width">Width <input type="range" id="edWidth" min="1" max="30"><span id="edWidthVal"></span></label>
+      </div>
+      <div class="pg" data-prop-group="fill"><label><input type="checkbox" id="edFill"> Fill</label></div>
+      <div class="pg" data-prop-group="opacity"><label title="Opacity">Opacity <input type="range" id="edOpacity" min="10" max="100"></label></div>
+      <button class="chip danger" id="edDel" title="Delete selected (Del)"><svg><use href="#i-trash"/></svg>Delete</button>
+      <span class="ed-hint" id="edHint"></span>
+    </div>
+    <div class="ed-wrap" id="edWrap">
+      <div class="ed-stage" id="edStage">
+        <canvas id="edBg"></canvas>
+        <svg id="edSvg" xmlns="http://www.w3.org/2000/svg"></svg>
+        <textarea id="edText" hidden spellcheck="false" placeholder="Type…"></textarea>
+        <div class="ed-loading" id="edLoading" hidden><div class="spinner"></div></div>
+      </div>
+    </div>
+    <input type="file" id="edImageInput" accept="image/*" hidden>
+  </div>
+
+  <div class="modal" id="signModal" hidden>
+    <div class="modal-backdrop"></div>
+    <div class="sign-box">
+      <div class="modal-head"><span>Draw your signature</span>
+        <div class="sign-colors" id="signColors">
+          <button data-c="#1e3a8a" style="--c:#1e3a8a" class="on" title="Blue"></button>
+          <button data-c="#111827" style="--c:#111827" title="Black"></button>
+          <button data-c="#b91c1c" style="--c:#b91c1c" title="Red"></button>
+        </div>
+      </div>
+      <canvas id="signPad"></canvas>
+      <div class="sign-foot">
+        <button class="btn btn-ghost" id="signClear">Clear</button>
+        <span style="flex:1"></span>
+        <button class="btn btn-ghost" id="signCancel">Cancel</button>
+        <button class="btn btn-primary" id="signUse">Add signature</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script src="vendor/Sortable.min.js"></script>
+  <script src="editor.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
